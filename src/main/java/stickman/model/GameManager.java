@@ -9,6 +9,7 @@ import stickman.level.*;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -28,6 +29,8 @@ public class GameManager implements GameEngine {
      */
     private List<String> levelFileNames;
 
+    private int currentLevel  =  0;
+
     /**
      * Creates a GameManager object.
      * @param levels The config file containing the names of all the levels
@@ -35,7 +38,7 @@ public class GameManager implements GameEngine {
     public GameManager(String levels) {
         this.levelFileNames = this.readConfigFile(levels);
 
-        this.level = LevelBuilderImpl.generateFromFile(levelFileNames.get(0), this);
+        this.level = LevelBuilderImpl.generateFromFile(levelFileNames.get(currentLevel), this);
     }
 
     @Override

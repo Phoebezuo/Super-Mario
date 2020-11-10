@@ -4,10 +4,14 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 import stickman.entity.Entity;
 import stickman.model.GameEngine;
 
+import javax.management.timer.Timer;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,6 +75,10 @@ public class GameWindow {
      */
     private double yViewportOffset = 0.0;
 
+    private Text time;
+
+    private int tick = 0;
+
     /**
      * Creates a new GameWindow object.
      * @param model The GameEngine of the game
@@ -94,6 +102,26 @@ public class GameWindow {
         this.backgroundDrawer = new BlockedBackground();
 
         backgroundDrawer.draw(model, pane);
+
+        initTimer();
+    }
+
+    private void initTimer() {
+        time = new Text();
+        time.setFill(Color.BLACK);
+        time.setX(10.0);
+        time.setY(20.0);
+        time.setViewOrder(0.0);
+        pane.getChildren().add(time);
+    }
+
+    private void updateTimer() {
+        time.setText("Elapsed time: " + this.getTime());
+    }
+
+    public String getTime() {
+        DecimalFormat df = new DecimalFormat("0.00");
+        return df.format(tick * 0.017);
     }
 
     /**
@@ -120,6 +148,9 @@ public class GameWindow {
      */
     private void draw() {
         model.tick();
+
+        tick++;
+        updateTimer();
 
         List<Entity> entities = model.getCurrentLevel().getEntities();
 
