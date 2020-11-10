@@ -5,12 +5,12 @@ import javafx.animation.Timeline;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import stickman.entity.Entity;
 import stickman.model.GameEngine;
 
-import javax.management.timer.Timer;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -76,6 +76,9 @@ public class GameWindow {
     private double yViewportOffset = 0.0;
 
     private Text time;
+    private Text lives;
+    private Text currentScore;
+    private Text totalScore;
 
     private int tick = 0;
 
@@ -103,26 +106,63 @@ public class GameWindow {
 
         backgroundDrawer.draw(model, pane);
 
-        initTimer();
+        initTimeDisplay();
+        initLivesDisplay();
+        initScoreDisplay();
     }
 
-    private void initTimer() {
+    private void initTimeDisplay() {
         time = new Text();
         time.setFill(Color.BLACK);
         time.setX(10.0);
         time.setY(20.0);
         time.setViewOrder(0.0);
+        time.setFont(Font.font(15));
         pane.getChildren().add(time);
     }
 
-    private void updateTimer() {
-        time.setText("Elapsed time: " + this.getTime());
+    private void initLivesDisplay() {
+        lives = new Text();
+        lives.setFill(Color.BLACK);
+        lives.setX(10.0);
+        lives.setY(40.0);
+        lives.setViewOrder(0.0);
+        lives.setFont(Font.font(15));
+        pane.getChildren().add(lives);
     }
 
-    public String getTime() {
-        DecimalFormat df = new DecimalFormat("0.00");
-        return df.format(tick * 0.017);
+    private void initScoreDisplay() {
+        currentScore = new Text();
+        currentScore.setFill(Color.BLACK);
+        currentScore.setX(500.0);
+        currentScore.setY(20.0);
+        currentScore.setViewOrder(0.0);
+        currentScore.setFont(Font.font(15));
+        pane.getChildren().add(currentScore);
+
+        totalScore = new Text();
+        totalScore.setFill(Color.BLACK);
+        totalScore.setX(500.0);
+        totalScore.setY(40.0);
+        totalScore.setViewOrder(0.0);
+        totalScore.setFont(Font.font(15));
+        pane.getChildren().add(totalScore);
     }
+
+    private void updateTimeDisplay() {
+        DecimalFormat df = new DecimalFormat("0.00");
+        time.setText("Elapsed time: " + df.format(tick * 0.017));
+    }
+
+    private void updateLivesDisplay() {
+        lives.setText("Lives: 5");
+    }
+
+    private void updateScoreDisplay() {
+        currentScore.setText("Current Score:");
+        totalScore.setText("Total Score: ");
+    }
+
 
     /**
      * Returns the scene.
@@ -150,7 +190,9 @@ public class GameWindow {
         model.tick();
 
         tick++;
-        updateTimer();
+        updateTimeDisplay();
+        updateLivesDisplay();
+        updateScoreDisplay();
 
         List<Entity> entities = model.getCurrentLevel().getEntities();
 

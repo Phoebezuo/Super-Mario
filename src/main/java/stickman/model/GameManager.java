@@ -29,7 +29,7 @@ public class GameManager implements GameEngine {
      */
     private List<String> levelFileNames;
 
-    private int currentLevel  =  0;
+    private int currentLevel = 2;
 
     /**
      * Creates a GameManager object.

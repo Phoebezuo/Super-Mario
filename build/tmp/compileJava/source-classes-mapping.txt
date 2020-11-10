@@ -10,8 +10,8 @@ stickman/view/BlockedBackground.java
  stickman.view.BlockedBackground
 stickman/entity/Interactable.java
  stickman.entity.Interactable
-stickman/view/GameWindow.java
- stickman.view.GameWindow
+stickman/level/LevelManager.java
+ stickman.level.LevelManager
 stickman/view/EntityViewImpl.java
  stickman.view.EntityViewImpl
  stickman.view.EntityViewImpl$1
@@ -49,15 +49,15 @@ stickman/entity/moving/player/StickMan.java
  stickman.entity.moving.player.StickMan$Size
 stickman/entity/moving/enemy/FollowStrategy.java
  stickman.entity.moving.enemy.FollowStrategy
-stickman/model/GameManager.java
- stickman.model.GameManager
+stickman/level/LevelBuilderImpl.java
+ stickman.level.LevelBuilderImpl
 stickman/entity/moving/MovingObject.java
  stickman.entity.moving.MovingObject
 stickman/entity/moving/enemy/EnemyStrategy.java
  stickman.entity.moving.enemy.EnemyStrategy
+stickman/model/GameManager.java
+ stickman.model.GameManager
 stickman/App.java
  stickman.App
-stickman/level/LevelManager.java
- stickman.level.LevelManager
-stickman/level/LevelBuilderImpl.java
- stickman.level.LevelBuilderImpl
+stickman/view/GameWindow.java
+ stickman.view.GameWindow
