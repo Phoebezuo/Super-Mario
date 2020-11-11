@@ -75,6 +75,10 @@ public class StickMan extends MovingObject implements Controllable {
      */
     private boolean leftFacing;
 
+    private double lives;
+    private double initXPos;
+    private double initYPos;
+
     /**
      * Creates a new StickMan object.
      * @param x The x-coordinate.
@@ -82,12 +86,13 @@ public class StickMan extends MovingObject implements Controllable {
      * @param size The size of the player.
      * @param level The level the player exists within.
      */
-    public StickMan(double x, double y, String size, Level level) {
+    public StickMan(double x, double y, String size, double lives, Level level) {
         super("ch_stand1.png", x, y, 0, 0, Layer.FOREGROUND);
 
         this.level = level;
         this.upgraded = false;
         this.leftFacing = false;
+        this.lives = lives;
 
         if (size.equals("normal")) {
             this.size = Size.NORMAL;
@@ -100,6 +105,8 @@ public class StickMan extends MovingObject implements Controllable {
         }
 
         this.yPos -= this.height;
+        this.initXPos = this.xPos;
+        this.initYPos = this.yPos;
     }
 
     @Override
@@ -176,13 +183,12 @@ public class StickMan extends MovingObject implements Controllable {
 
     @Override
     public void die() {
-//        this.active = false;
-
-        ((LevelManager) level).setLose(true);
-
-//        if (this.level != null) {
-//            this.level.reset();
-//        }
+        lives--;
+        if (lives == 0.0) {
+            ((LevelManager) level).setLose(true);
+        }
+        this.xPos = this.initXPos;
+        this.yPos = this.initYPos;
     }
 
     @Override
@@ -196,8 +202,9 @@ public class StickMan extends MovingObject implements Controllable {
     }
 
     @Override
-    public void win() {
+    public void nextLevel() {
         ((LevelManager) level).setWon(true);
+        // TODO
     }
 
     @Override
@@ -219,6 +226,10 @@ public class StickMan extends MovingObject implements Controllable {
     private void faceRight() {
         this.leftFacing = false;
         this.imagePath = "ch_stand1.png";
+    }
+
+    public double getLives() {
+        return lives;
     }
 
 }

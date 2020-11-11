@@ -51,5 +51,5 @@ public interface Controllable extends MovingEntity {
     /**
      * Called when the player reaches the flag.
      */
-    void win();
+    void nextLevel();
 }

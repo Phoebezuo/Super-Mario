@@ -24,7 +24,6 @@ public class Slime extends MovingObject implements Interactable {
     private EnemyStrategy strategy;
 
     /**
-     *
      * @param imagePath
      * @param x
      * @param y
@@ -38,7 +37,6 @@ public class Slime extends MovingObject implements Interactable {
         this.yVelocity = 0;
 
         this.left = startLeft;
-
         this.strategy = strategy;
     }
 

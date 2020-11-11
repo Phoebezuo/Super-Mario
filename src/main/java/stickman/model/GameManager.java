@@ -29,7 +29,7 @@ public class GameManager implements GameEngine {
      */
     private List<String> levelFileNames;
 
-    private int currentLevel = 2;
+    private int currentLevel = 0;
 
     /**
      * Creates a GameManager object.
@@ -76,10 +76,14 @@ public class GameManager implements GameEngine {
         this.level.shoot();
     }
 
-    @Override
-    public void reset() {
-        this.level = LevelBuilderImpl.generateFromFile(this.level.getSource(), this);
+    public int getLevel() {
+        return currentLevel;
     }
+
+//    @Override
+//    public void reset() {
+//        this.level = LevelBuilderImpl.generateFromFile(this.level.getSource(), this);
+//    }
 
     /**
      * Retrieves the list of level filenames from a config file

@@ -68,6 +68,8 @@ public class LevelBuilderImpl implements LevelBuilder {
      */
     private double heroX;
 
+    private double heroLives;
+
     /**
      * The size of the hero.
      */
@@ -130,9 +132,10 @@ public class LevelBuilderImpl implements LevelBuilder {
     }
 
     @Override
-    public LevelBuilder setHero(double x, String size) {
+    public LevelBuilder setHero(double x, String size, double heroLives) {
         this.heroX = x;
         this.heroSize = size;
+        this.heroLives = heroLives;
         return this;
     }
 
@@ -151,7 +154,7 @@ public class LevelBuilderImpl implements LevelBuilder {
 
     @Override
     public Level build() {
-        return new LevelManager(model, file, height, width, floorHeight, heroX, heroSize, staticEntities, movingEntities, interactables);
+        return new LevelManager(model, file, height, width, floorHeight, heroX, heroSize, heroLives, staticEntities, movingEntities, interactables);
     }
 
     /**
@@ -175,8 +178,9 @@ public class LevelBuilderImpl implements LevelBuilder {
             String size = (String) object.get("stickmanSize");
             JSONObject pos = (JSONObject) object.get("stickmanPos");
             double heroX = (double) pos.get("x");
+            double heroLives = (double) object.get("stickmanLives");
 
-            levelBuilder.setHero(heroX, size);
+            levelBuilder.setHero(heroX, size, heroLives);
 
             JSONObject levelDimensions = (JSONObject) object.get("levelDimensions");
 

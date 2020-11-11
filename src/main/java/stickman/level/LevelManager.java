@@ -90,7 +90,7 @@ public class LevelManager implements Level {
      * @param movingEntities The list of moving entities in the level
      * @param interactables The list of entities that can interact with the hero in the level
      */
-    public LevelManager(GameEngine model, String filename, double height, double width, double floorHeight, double heroX, String heroSize, List<Entity> entities, List<MovingEntity> movingEntities, List<Interactable> interactables) {
+    public LevelManager(GameEngine model, String filename, double height, double width, double floorHeight, double heroX, String heroSize, double heroLives, List<Entity> entities, List<MovingEntity> movingEntities, List<Interactable> interactables) {
         this.model = model;
         this.filename = filename;
         this.height = height;
@@ -103,7 +103,7 @@ public class LevelManager implements Level {
         this.projectiles = new ArrayList<>();
 
         // Create new hero
-        this.hero = new StickMan(heroX, floorHeight, heroSize, this);
+        this.hero = new StickMan(heroX, floorHeight, heroSize, heroLives, this);
         this.movingEntities.add(this.hero);
 
         // Ensure entities has all entities (including moving ones)
@@ -230,12 +230,12 @@ public class LevelManager implements Level {
         return this.hero.stop();
     }
 
-    @Override
-    public void reset() {
-        if (this.model != null) {
-            this.model.reset();
-        }
-    }
+//    @Override
+//    public void reset() {
+//        if (this.model != null) {
+//            this.model.reset();
+//        }
+//    }
 
     @Override
     public void shoot() {
@@ -277,5 +277,9 @@ public class LevelManager implements Level {
 
     public void setLose(boolean value) {
         lose = value;
+    }
+
+    public double getHeroLives() {
+        return ((StickMan) hero).getLives();
     }
 }

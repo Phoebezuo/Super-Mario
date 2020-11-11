@@ -9,7 +9,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import stickman.entity.Entity;
+import stickman.level.LevelManager;
 import stickman.model.GameEngine;
+import stickman.model.GameManager;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -75,10 +77,11 @@ public class GameWindow {
      */
     private double yViewportOffset = 0.0;
 
-    private Text time;
-    private Text lives;
-    private Text currentScore;
-    private Text totalScore;
+    private Text timeText;
+    private Text livesText;
+    private Text levelText;
+    private Text currentScoreText;
+    private Text totalScoreText;
 
     private Timeline timeline;
 
@@ -110,69 +113,84 @@ public class GameWindow {
 
         initTimeDisplay();
         initLivesDisplay();
+        initLevelDisplay();
         initScoreDisplay();
     }
 
     private void initTimeDisplay() {
-        time = new Text();
-        time.setFill(Color.BLACK);
-        time.setX(10.0);
-        time.setY(20.0);
-        time.setViewOrder(0.0);
-        time.setFont(Font.font(15));
-        pane.getChildren().add(time);
+        timeText = new Text();
+        timeText.setFill(Color.BLACK);
+        timeText.setX(10.0);
+        timeText.setY(20.0);
+        timeText.setViewOrder(0.0);
+        timeText.setFont(Font.font(15));
+        pane.getChildren().add(timeText);
     }
 
     private void initLivesDisplay() {
-        lives = new Text();
-        lives.setFill(Color.BLACK);
-        lives.setX(10.0);
-        lives.setY(40.0);
-        lives.setViewOrder(0.0);
-        lives.setFont(Font.font(15));
-        pane.getChildren().add(lives);
+        livesText = new Text();
+        livesText.setFill(Color.BLACK);
+        livesText.setX(10.0);
+        livesText.setY(40.0);
+        livesText.setViewOrder(0.0);
+        livesText.setFont(Font.font(15));
+        pane.getChildren().add(livesText);
+    }
+
+    private void initLevelDisplay() {
+        levelText = new Text();
+        levelText.setFill(Color.BLACK);
+        levelText.setX(280.0);
+        levelText.setY(20.0);
+        levelText.setViewOrder(0.0);
+        levelText.setFont(Font.font(15));
+        pane.getChildren().add(levelText);
     }
 
     private void initScoreDisplay() {
-        currentScore = new Text();
-        currentScore.setFill(Color.BLACK);
-        currentScore.setX(500.0);
-        currentScore.setY(20.0);
-        currentScore.setViewOrder(0.0);
-        currentScore.setFont(Font.font(15));
-        pane.getChildren().add(currentScore);
+        currentScoreText = new Text();
+        currentScoreText.setFill(Color.BLACK);
+        currentScoreText.setX(500.0);
+        currentScoreText.setY(20.0);
+        currentScoreText.setViewOrder(0.0);
+        currentScoreText.setFont(Font.font(15));
+        pane.getChildren().add(currentScoreText);
 
-        totalScore = new Text();
-        totalScore.setFill(Color.BLACK);
-        totalScore.setX(500.0);
-        totalScore.setY(40.0);
-        totalScore.setViewOrder(0.0);
-        totalScore.setFont(Font.font(15));
-        pane.getChildren().add(totalScore);
+        totalScoreText = new Text();
+        totalScoreText.setFill(Color.BLACK);
+        totalScoreText.setX(500.0);
+        totalScoreText.setY(40.0);
+        totalScoreText.setViewOrder(0.0);
+        totalScoreText.setFont(Font.font(15));
+        pane.getChildren().add(totalScoreText);
     }
 
     private void updateTimeDisplay() {
         DecimalFormat df = new DecimalFormat("0.00");
-        time.setText("Elapsed time: " + df.format(tick * 0.017));
+        timeText.setText("Elapsed time: " + df.format(tick * 0.017));
     }
 
     private void updateLivesDisplay() {
-        lives.setText("Lives: 5");
+        livesText.setText("Lives: " + ((LevelManager) model.getCurrentLevel()).getHeroLives());
+    }
+
+    private void updateLevelDisplay() {
+        levelText.setText("Level " + ((GameManager) model).getLevel());
     }
 
     private void updateScoreDisplay() {
-        currentScore.setText("Current Score:");
-        totalScore.setText("Total Score: ");
+        currentScoreText.setText("Current Score:");
+        totalScoreText.setText("Total Score: ");
     }
 
     private void initStatusDisplay(String s) {
-//        this.pane.getChildren().clear();
+        this.pane.getChildren().clear();
         Text text = new Text(s);
         text.setX(170);
         text.setY(200);
         text.setFont(Font.font(50));
         pane.getChildren().add(text);
-//        timeline.stop();
+        timeline.stop();
     }
 
     /**
@@ -203,6 +221,7 @@ public class GameWindow {
         tick++;
         updateTimeDisplay();
         updateLivesDisplay();
+        updateLevelDisplay();
         updateScoreDisplay();
 
         if (model.getCurrentLevel().isWon()) {

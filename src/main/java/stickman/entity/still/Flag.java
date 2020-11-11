@@ -25,6 +25,6 @@ public class Flag extends GameObject implements Interactable {
 
     @Override
     public void interact(Controllable hero) {
-        hero.win();
+        hero.nextLevel();
     }
 }

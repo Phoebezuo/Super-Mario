@@ -48,10 +48,10 @@ public interface GameEngine {
      */
     void shoot();
 
-    /**
-     * Restarts the level.
-     */
-    void reset();
+//    /**
+//     * Restarts the level.
+//     */
+//    void reset();
 
 //    boolean isWon();
 }

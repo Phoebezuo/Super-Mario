@@ -77,7 +77,7 @@ public interface Level {
     /**
      * Resets the level.
      */
-    void reset();
+//    void reset();
 
     /**
      * Makes the player shoot.
