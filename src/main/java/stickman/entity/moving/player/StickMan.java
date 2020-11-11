@@ -3,6 +3,7 @@ package stickman.entity.moving.player;
 import stickman.entity.Entity;
 import stickman.entity.moving.MovingObject;
 import stickman.level.Level;
+import stickman.level.LevelManager;
 
 import java.util.List;
 
@@ -175,11 +176,13 @@ public class StickMan extends MovingObject implements Controllable {
 
     @Override
     public void die() {
-        this.active = false;
+//        this.active = false;
 
-        if (this.level != null) {
-            this.level.reset();
-        }
+        ((LevelManager) level).setLose(true);
+
+//        if (this.level != null) {
+//            this.level.reset();
+//        }
     }
 
     @Override
@@ -194,7 +197,7 @@ public class StickMan extends MovingObject implements Controllable {
 
     @Override
     public void win() {
-        this.level.win();
+        ((LevelManager) level).setWon(true);
     }
 
     @Override

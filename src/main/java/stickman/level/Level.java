@@ -90,8 +90,6 @@ public interface Level {
      */
     String getSource();
 
-    /**
-     * Stops level and shows victory message.
-     */
-    void win();
+    boolean isWon();
+    boolean isLose();
 }

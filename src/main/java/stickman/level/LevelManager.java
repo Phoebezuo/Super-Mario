@@ -6,7 +6,6 @@ import stickman.entity.moving.other.Bullet;
 import stickman.entity.moving.other.Projectile;
 import stickman.entity.moving.player.Controllable;
 import stickman.entity.moving.player.StickMan;
-import stickman.entity.still.Win;
 import stickman.model.GameEngine;
 
 import java.util.ArrayList;
@@ -74,6 +73,9 @@ public class LevelManager implements Level {
      * The GameEngine the level is running inside of.
      */
     private GameEngine model;
+
+    private boolean won;
+    private boolean lose;
 
     /**
      * Creates a new LevelManager object.
@@ -260,9 +262,20 @@ public class LevelManager implements Level {
     }
 
     @Override
-    public void win() {
-        this.active = false;
+    public boolean isWon() {
+        return won;
+    }
 
-        this.entities.add(new Win(hero.getXPos() - 200, hero.getYPos() - 200));
+    public void setWon(boolean value) {
+        won = value;
+    }
+
+    @Override
+    public boolean isLose() {
+        return lose;
+    }
+
+    public void setLose(boolean value) {
+        lose = value;
     }
 }

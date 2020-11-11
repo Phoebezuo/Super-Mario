@@ -52,4 +52,6 @@ public interface GameEngine {
      * Restarts the level.
      */
     void reset();
+
+//    boolean isWon();
 }

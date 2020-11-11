@@ -1,5 +1,5 @@
-stickman/entity/still/Flag.java
- stickman.entity.still.Flag
+stickman/App.java
+ stickman.App
 stickman/view/KeyboardInputHandler.java
  stickman.view.KeyboardInputHandler
 stickman/entity/moving/other/Projectile.java
@@ -10,8 +10,8 @@ stickman/view/BlockedBackground.java
  stickman.view.BlockedBackground
 stickman/entity/Interactable.java
  stickman.entity.Interactable
-stickman/level/LevelManager.java
- stickman.level.LevelManager
+stickman/model/GameManager.java
+ stickman.model.GameManager
 stickman/view/EntityViewImpl.java
  stickman.view.EntityViewImpl
  stickman.view.EntityViewImpl$1
@@ -23,8 +23,8 @@ stickman/entity/still/Platform.java
  stickman.entity.still.Platform
 stickman/model/GameEngine.java
  stickman.model.GameEngine
-stickman/entity/still/Mushroom.java
- stickman.entity.still.Mushroom
+stickman/view/GameWindow.java
+ stickman.view.GameWindow
 stickman/level/Level.java
  stickman.level.Level
 stickman/entity/still/Win.java
@@ -55,9 +55,9 @@ stickman/entity/moving/MovingObject.java
  stickman.entity.moving.MovingObject
 stickman/entity/moving/enemy/EnemyStrategy.java
  stickman.entity.moving.enemy.EnemyStrategy
-stickman/model/GameManager.java
- stickman.model.GameManager
-stickman/App.java
- stickman.App
-stickman/view/GameWindow.java
- stickman.view.GameWindow
+stickman/level/LevelManager.java
+ stickman.level.LevelManager
+stickman/entity/still/Mushroom.java
+ stickman.entity.still.Mushroom
+stickman/entity/still/Flag.java
+ stickman.entity.still.Flag

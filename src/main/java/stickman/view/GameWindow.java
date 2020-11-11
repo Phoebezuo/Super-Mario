@@ -80,6 +80,8 @@ public class GameWindow {
     private Text currentScore;
     private Text totalScore;
 
+    private Timeline timeline;
+
     private int tick = 0;
 
     /**
@@ -163,6 +165,15 @@ public class GameWindow {
         totalScore.setText("Total Score: ");
     }
 
+    private void initStatusDisplay(String s) {
+//        this.pane.getChildren().clear();
+        Text text = new Text(s);
+        text.setX(170);
+        text.setY(200);
+        text.setFont(Font.font(50));
+        pane.getChildren().add(text);
+//        timeline.stop();
+    }
 
     /**
      * Returns the scene.
@@ -176,7 +187,7 @@ public class GameWindow {
      * Starts the game.
      */
     public void run() {
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(17),
+        timeline = new Timeline(new KeyFrame(Duration.millis(17),
                 t -> this.draw()));
 
         timeline.setCycleCount(Timeline.INDEFINITE);
@@ -193,6 +204,12 @@ public class GameWindow {
         updateTimeDisplay();
         updateLivesDisplay();
         updateScoreDisplay();
+
+        if (model.getCurrentLevel().isWon()) {
+            initStatusDisplay("You are won!");
+        } else if (model.getCurrentLevel().isLose()) {
+            initStatusDisplay("You are lose!");
+        }
 
         List<Entity> entities = model.getCurrentLevel().getEntities();
 
