@@ -108,6 +108,11 @@ public class StickMan extends MovingObject implements Controllable {
     }
 
     @Override
+    public Entity deepCopy() {
+        return new StickMan(this.getXPos(), this.getYPos(), this.size.toString().toLowerCase(), this.level);
+    }
+
+    @Override
     public void tick(List<Entity> entities, double heroX, double floorHeight) {
 
         this.gravity(entities, floorHeight);

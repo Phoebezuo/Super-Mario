@@ -5,6 +5,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import stickman.model.GameEngine;
+import stickman.model.GameManager;
 
 import java.net.URL;
 import java.util.HashMap;
@@ -66,6 +67,14 @@ class KeyboardInputHandler {
             return;
         }
         pressedKeys.add(keyEvent.getCode());
+
+        if (keyEvent.getCode().equals(KeyCode.S)) {
+            ((GameManager) model).save();
+        }
+
+        if (keyEvent.getCode().equals(KeyCode.L)) {
+            ((GameManager) model).load();
+        }
 
         if (keyEvent.getCode().equals(KeyCode.UP)) {
             if (model.jump()) {

@@ -1,5 +1,6 @@
 package stickman.entity.still;
 
+import stickman.entity.Entity;
 import stickman.entity.GameObject;
 
 /**
@@ -19,5 +20,10 @@ public class Platform extends GameObject {
     @Override
     public boolean isSolid() {
         return true;
+    }
+
+    @Override
+    public Entity deepCopy() {
+        return new Platform(this.getXPos(), this.getYPos());
     }
 }

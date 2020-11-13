@@ -54,6 +54,8 @@ public interface Entity {
      */
     boolean isActive();
 
+    Entity deepCopy();
+
     /**
      * Returns true if the two entities are colliding (based on AAB)
      * @param other The other entity

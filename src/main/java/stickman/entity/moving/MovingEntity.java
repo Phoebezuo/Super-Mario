@@ -20,6 +20,9 @@ public interface MovingEntity extends Entity {
      */
     void die();
 
+    @Override
+    Entity deepCopy();
+
     /**
      * Returns the distance (in pixels) to the nearest entity with same y-coordinates.
      * @param left Whether to check to the left

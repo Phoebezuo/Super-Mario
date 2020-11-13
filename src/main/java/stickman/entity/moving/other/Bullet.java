@@ -25,6 +25,8 @@ public class Bullet extends MovingObject implements Projectile {
      */
     public static final double BULLET_HEIGHT = 10;
 
+    private boolean left;
+
     /**
      * Constructs a bullet object.
      * @param x The x-coordinate
@@ -33,9 +35,14 @@ public class Bullet extends MovingObject implements Projectile {
      */
     public Bullet(double x, double y, boolean left) {
         super("bullet.png", x, y, BULLET_HEIGHT, BULLET_WIDTH, Layer.FOREGROUND);
-
+        this.left = left;
         this.xVelocity = left ? -BULLET_SPEED : BULLET_SPEED;
         this.yVelocity = 0;
+    }
+
+    @Override
+    public Entity deepCopy() {
+        return new Bullet(this.getXPos(), this.getYPos(), this.left);
     }
 
     @Override

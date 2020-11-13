@@ -13,7 +13,6 @@ import stickman.level.LevelManager;
 import stickman.model.GameEngine;
 import stickman.model.GameManager;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -84,9 +83,7 @@ public class GameWindow {
     private Text currentScoreText;
     private Text prevScoreText;
     private Timeline timeline;
-
-    private int counter = 0;
-    private double displayTime = 0.0;
+    private double savedTime = 0;
 
     /**
      * Creates a new GameWindow object.
@@ -174,24 +171,21 @@ public class GameWindow {
     }
 
     private void updateDisplay() {
-        double elapsedTime = Math.round(((GameManager) model).getTick() * 0.009 * 10) / 10.0;
+        double startTime = ((GameManager) model).getStartTime();
+        double elapsedTime = Math.round((System.currentTimeMillis() - startTime) / 1000 * 10) / 10.0;
         double targetTime =  ((LevelManager) model.getCurrentLevel()).getTargetTime();
 
-        if (elapsedTime < targetTime) {
-            counter++;
-            if (counter == 100) {
-                displayTime++;
+        if (elapsedTime <= targetTime) {
+            if (elapsedTime - savedTime == 1) {
                 ((GameManager) model).changeCurrentScore(1);
-                counter = 0;
+                savedTime = elapsedTime;
             }
         } else {
-            counter++;
-            if (counter == 100) {
-                displayTime++;
+            if (elapsedTime - savedTime == 1) {
                 if (((GameManager) model).getCurrentScore() > 0) {
                     ((GameManager) model).changeCurrentScore(-1);
                 }
-                counter = 0;
+                savedTime = elapsedTime;
             }
         }
 
@@ -237,8 +231,6 @@ public class GameWindow {
      */
     private void draw() {
         model.tick();
-
-        ((GameManager) model).updateTick();
         updateDisplay();
 
         if (((LevelManager) model.getCurrentLevel()).isWon()) {

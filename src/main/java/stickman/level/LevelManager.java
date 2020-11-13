@@ -93,7 +93,9 @@ public class LevelManager implements Level {
      * @param movingEntities The list of moving entities in the level
      * @param interactables The list of entities that can interact with the hero in the level
      */
-    public LevelManager(GameEngine model, String filename, double height, double width, double floorHeight, double targetTime, double heroX, String heroSize, List<Entity> entities, List<MovingEntity> movingEntities, List<Interactable> interactables) {
+    public LevelManager(GameEngine model, String filename, double height, double width, double floorHeight,
+                        double targetTime, double heroX, String heroSize, List<Entity> entities,
+                        List<MovingEntity> movingEntities, List<Interactable> interactables) {
         this.model = model;
         this.filename = filename;
         this.height = height;
@@ -113,9 +115,68 @@ public class LevelManager implements Level {
         // Ensure entities has all entities (including moving ones)
         this.entities.addAll(movingEntities);
         this.entities = new ArrayList<>(new HashSet<>(entities));
-
         this.active = true;
+    }
 
+    private LevelManager(StickMan hero, double height, double width, double floorHeight, double targetTime,
+                         List<Entity> entities, List<MovingEntity> movingEntities, List<Interactable> interactables) {
+        this.height = height;
+        this.width = width;
+        this.floorHeight = floorHeight;
+        this.targetTime = targetTime;
+        this.entities = entities;
+        this.movingEntities = movingEntities;
+        this.interactables = interactables;
+        this.projectiles = new ArrayList<>();
+
+        // Create new hero
+        this.hero = hero;
+        this.movingEntities.add(this.hero);
+
+        // Ensure entities has all entities (including moving ones)
+        this.entities.addAll(movingEntities);
+        this.entities = new ArrayList<>(new HashSet<>(entities));
+        this.active = true;
+    }
+
+    public LevelManager deepCopy() {
+        List<Entity> copiedEntities = new ArrayList<>();
+        List<MovingEntity> copiedMovingEntities = new ArrayList<>();
+        List<Interactable> copiedInteractables = new ArrayList<>();
+        List<Projectile> copiedProjectiles = new ArrayList<>();
+
+        for (Entity e : entities) {
+            copiedEntities.add(e.deepCopy());
+        }
+        for (MovingEntity m: movingEntities) {
+            copiedMovingEntities.add((MovingEntity) m.deepCopy());
+        }
+        for (Interactable i: interactables) {
+            copiedInteractables.add((Interactable) i.deepCopy());
+        }
+        for (Projectile p: projectiles) {
+            copiedProjectiles.add((Projectile) p.deepCopy());
+        }
+
+//        for (Entity e : copiedEntities) {
+//            System.out.println(e);
+//        }
+//        System.out.println("-----------------");
+//
+//        for (Entity e : copiedMovingEntities) {
+//            System.out.println(e);
+//        }
+//        System.out.println("-----------------");
+//
+//        for (Entity e : copiedInteractables) {
+//            System.out.println(e);
+//        }
+//        System.out.println("-----------------");
+//
+//        for (Entity e : copiedProjectiles) {
+//            System.out.println(e);
+//        }
+        return new LevelManager((StickMan) this.hero.deepCopy(), height, width, floorHeight, targetTime, entities, movingEntities, interactables);
     }
 
     @Override

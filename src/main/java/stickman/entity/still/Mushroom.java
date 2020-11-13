@@ -1,5 +1,6 @@
 package stickman.entity.still;
 
+import stickman.entity.Entity;
 import stickman.entity.GameObject;
 import stickman.entity.moving.player.Controllable;
 import stickman.entity.Interactable;
@@ -29,5 +30,10 @@ public class Mushroom extends GameObject implements Interactable {
             this.active = false;
             hero.upgrade();
         }
+    }
+
+    @Override
+    public Entity deepCopy() {
+        return new Mushroom(this.getXPos(), this.getYPos());
     }
 }

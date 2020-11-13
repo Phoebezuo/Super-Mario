@@ -1,5 +1,7 @@
 package stickman.model;
 
+import stickman.SaveLoad.Caretaker;
+import stickman.SaveLoad.Originator;
 import stickman.level.*;
 import java.util.List;
 
@@ -20,9 +22,13 @@ public class GameManager implements GameEngine {
 
     private int currentLevel = 0;
     private double heroLives;
-    private int tick = 0;
     private int currentScore = 0;
     private int prevScore = 0;
+
+    private double startTime = System.currentTimeMillis();
+
+    private Originator originator = new Originator();
+    private Caretaker careTaker = new Caretaker();
 
     /**
      * Creates a GameManager object.
@@ -35,12 +41,8 @@ public class GameManager implements GameEngine {
         this.level = LevelBuilderImpl.generateFromFile(levelFileNames.get(currentLevel), this);
     }
 
-    public int getTick() {
-        return tick;
-    }
-
-    public void updateTick() {
-        tick++;
+    public double getStartTime() {
+        return startTime;
     }
 
     @Override
@@ -90,7 +92,7 @@ public class GameManager implements GameEngine {
         }
         prevScore += currentScore;
         currentScore = 0;
-        tick = 0;
+        startTime = System.currentTimeMillis();
         this.level = LevelBuilderImpl.generateFromFile(levelFileNames.get(currentLevel), this);
     }
 
@@ -114,4 +116,16 @@ public class GameManager implements GameEngine {
         return prevScore;
     }
 
+    public void save() {
+        System.out.println("Save");
+        LevelManager copiedLevel = ((LevelManager) level).deepCopy();
+        originator.setState(copiedLevel);
+        careTaker.add(originator.createMemento());
+    }
+
+    public void load() {
+        System.out.println("Load");
+        originator.setMomento(careTaker.get());
+        this.level = originator.getState();
+    }
 }

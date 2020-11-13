@@ -61,6 +61,9 @@ public abstract class GameObject implements Entity {
     }
 
     @Override
+    public abstract Entity deepCopy();
+
+    @Override
     public String getImagePath() {
         return this.imagePath;
     }

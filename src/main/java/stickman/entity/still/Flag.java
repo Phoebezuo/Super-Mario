@@ -1,5 +1,6 @@
 package stickman.entity.still;
 
+import stickman.entity.Entity;
 import stickman.entity.GameObject;
 import stickman.entity.moving.player.Controllable;
 import stickman.entity.Interactable;
@@ -26,5 +27,10 @@ public class Flag extends GameObject implements Interactable {
     @Override
     public void interact(Controllable hero) {
         hero.nextLevel();
+    }
+
+    @Override
+    public Entity deepCopy() {
+        return new Flag(this.getXPos(), this.getYPos());
     }
 }

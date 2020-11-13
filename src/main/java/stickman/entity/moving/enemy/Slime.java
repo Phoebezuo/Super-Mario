@@ -41,6 +41,11 @@ public class Slime extends MovingObject implements Interactable {
     }
 
     @Override
+    public Entity deepCopy() {
+        return new Slime(this.getImagePath(), this.getXPos(), this.getYPos(), this.left, this.strategy);
+    }
+
+    @Override
     public void tick(List<Entity> entities, double heroX, double floorHeight) {
 
         this.gravity(entities, floorHeight);
