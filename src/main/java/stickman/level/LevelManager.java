@@ -141,22 +141,25 @@ public class LevelManager implements Level {
         List<Entity> copiedEntities = new ArrayList<>();
         List<MovingEntity> copiedMovingEntities = new ArrayList<>();
         List<Interactable> copiedInteractables = new ArrayList<>();
-        List<Projectile> copiedProjectiles = new ArrayList<>();
 
         for (Entity e : entities) {
-            copiedEntities.add(e.deepCopy());
+            if (!(e.getImagePath().equals("ch_stand1.png"))) {
+                copiedEntities.add(e.deepCopy());
+            }
         }
         for (MovingEntity m: movingEntities) {
-            copiedMovingEntities.add((MovingEntity) m.deepCopy());
+            if (!(m.getImagePath().equals("ch_stand1.png"))) {
+                copiedMovingEntities.add((MovingEntity) m.deepCopy());
+            }
         }
+
         for (Interactable i: interactables) {
             copiedInteractables.add((Interactable) i.deepCopy());
         }
-        for (Projectile p: projectiles) {
-            copiedProjectiles.add((Projectile) p.deepCopy());
-        }
 
-        return new LevelManager(this.hero.deepCopy(), floorHeight, targetTime, entities, movingEntities, interactables);
+//        copiedEntities.addAll(copiedMovingEntities);
+//        copiedEntities.addAll(copiedInteractables);
+        return new LevelManager(this.hero.deepCopy(), floorHeight, targetTime, copiedEntities, copiedMovingEntities, copiedInteractables);
     }
 
     @Override
