@@ -178,11 +178,13 @@ public class LevelBuilderImpl implements LevelBuilder {
             Reader reader = new FileReader(file);
             JSONObject object = (JSONObject) parser.parse(reader);
 
+            // stickman
             String size = (String) object.get("stickmanSize");
             JSONObject pos = (JSONObject) object.get("stickmanPos");
             double heroX = (double) pos.get("x");
             levelBuilder.setHero(heroX, size);
 
+            // level dimensions
             JSONObject levelDimensions = (JSONObject) object.get("levelDimensions");
             double width = (double) levelDimensions.get("width");
             double height = (double) levelDimensions.get("height");
@@ -190,13 +192,14 @@ public class LevelBuilderImpl implements LevelBuilder {
             levelBuilder.setDimensions(width, height);
             levelBuilder.setFloorHeight(floorHeight);
 
+            // target time
             double targetTime = (double) object.get("targetTime");
             levelBuilder.setTargetTime(targetTime);
 
+            // platforms
             JSONArray platforms = (JSONArray) object.get("platforms");
             Iterator<JSONObject> iterator = (Iterator<JSONObject>) platforms.iterator();
 
-            // Get platforms
             while (iterator.hasNext()) {
                 JSONObject plat = (JSONObject) iterator.next();
                 double x = (double) plat.get("x");
@@ -204,10 +207,10 @@ public class LevelBuilderImpl implements LevelBuilder {
                 levelBuilder.addStaticEntity(new Platform(x, y));
             }
 
+            // mushrooms
             JSONArray mushrooms = (JSONArray) object.get("mushrooms");
             iterator = (Iterator<JSONObject>) mushrooms.iterator();
 
-            // Get mushrooms
             while (iterator.hasNext()) {
                 JSONObject mush = (JSONObject) iterator.next();
                 double x = (double) mush.get("x");
@@ -217,22 +220,19 @@ public class LevelBuilderImpl implements LevelBuilder {
                 levelBuilder.addStaticEntity(shroom);
             }
 
-            // Get enemies
+            // enemies
             JSONArray enemies = (JSONArray) object.get("enemies");
             iterator = (Iterator<JSONObject>) enemies.iterator();
 
-            // Enemy Strategies
             EnemyStrategy dumb = new DumbStrategy();
             EnemyStrategy follow = new FollowStrategy();
 
-            // Get mushrooms
             while (iterator.hasNext()) {
                 JSONObject enemyJSON = (JSONObject) iterator.next();
                 double x = (double) enemyJSON.get("x");
                 double y = (double) enemyJSON.get("y");
                 String image = (String) enemyJSON.get("path");
                 boolean startLeft = (boolean) enemyJSON.get("startLeft");
-
                 String strategy = (String) enemyJSON.get("strategy");
                 EnemyStrategy strat = null;
                 switch (strategy) {
@@ -243,12 +243,12 @@ public class LevelBuilderImpl implements LevelBuilder {
                         strat = follow;
                         break;
                 }
-
                 Slime enemy = new Slime(image, x, y, startLeft, strat);
                 levelBuilder.addInteractable(enemy);
                 levelBuilder.addEnemy(enemy);
             }
 
+            // flags
             JSONObject flagJSON = (JSONObject) object.get("flag");
             double flagX = (double) flagJSON.get("x");
             double flagY = (double) flagJSON.get("y");

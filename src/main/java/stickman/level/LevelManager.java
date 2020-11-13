@@ -102,10 +102,10 @@ public class LevelManager implements Level {
         this.width = width;
         this.floorHeight = floorHeight;
         this.targetTime = targetTime;
+
         this.entities = entities;
         this.movingEntities = movingEntities;
         this.interactables = interactables;
-
         this.projectiles = new ArrayList<>();
 
         // Create new hero
@@ -118,10 +118,15 @@ public class LevelManager implements Level {
         this.active = true;
     }
 
-    private LevelManager(Entity hero, double floorHeight, double targetTime,
-                         List<Entity> entities, List<MovingEntity> movingEntities, List<Interactable> interactables) {
+    private LevelManager(String filename, double height, double width, double floorHeight, double targetTime, boolean active,
+                         Entity hero, List<Entity> entities, List<MovingEntity> movingEntities, List<Interactable> interactables) {
+        this.filename = filename;
+        this.height = height;
+        this.width = width;
         this.floorHeight = floorHeight;
         this.targetTime = targetTime;
+        this.active = active;
+
         this.entities = entities;
         this.movingEntities = movingEntities;
         this.interactables = interactables;
@@ -154,12 +159,15 @@ public class LevelManager implements Level {
         }
 
         for (Interactable i: interactables) {
-            copiedInteractables.add((Interactable) i.deepCopy());
+            if (!(i.getImagePath().equals("ch_stand1.png"))) {
+                copiedInteractables.add((Interactable) i.deepCopy());
+            }
         }
 
 //        copiedEntities.addAll(copiedMovingEntities);
 //        copiedEntities.addAll(copiedInteractables);
-        return new LevelManager(this.hero.deepCopy(), floorHeight, targetTime, copiedEntities, copiedMovingEntities, copiedInteractables);
+        return new LevelManager(filename, height, width, floorHeight, targetTime, active,
+                this.hero.deepCopy(), copiedEntities, copiedMovingEntities, copiedInteractables);
     }
 
     @Override
