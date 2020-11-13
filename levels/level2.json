@@ -5,9 +5,9 @@
   },
   "cloudVelocity": 3.2,
   "levelDimensions": {
-    "width": 700.0,
-    "height": 700.0,
-    "floorHeight": 350.0
+    "width": 600.0,
+    "height": 1000.0,
+    "floorHeight": 900.0
   },
   "targetTime": 20.0,
   "platforms": [
@@ -15,13 +15,13 @@
   "mushrooms": [
     {
       "x": 130.0,
-      "y": 330.0
+      "y": 880.0
     }
   ],
   "enemies": [
   ],
   "flag": {
-    "x": 600.0,
-    "y": 310.0
+    "x": 200.0,
+    "y": 860.0
   }
 }
