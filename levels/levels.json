@@ -3,5 +3,6 @@
     "vertical.json",
     "empty.json",
     "default.json"
-  ]
+  ],
+  "stickmanLives": 2.0
 }

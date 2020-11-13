@@ -179,6 +179,7 @@ public class StickMan extends MovingObject implements Controllable {
     @Override
     public void upgrade() {
         this.upgraded = true;
+        ((LevelManager) level).addCurrentScore(50);
     }
 
     @Override
@@ -203,8 +204,7 @@ public class StickMan extends MovingObject implements Controllable {
 
     @Override
     public void nextLevel() {
-        ((LevelManager) level).setWon(true);
-        // TODO
+        ((LevelManager) level).nextLevel();
     }
 
     @Override

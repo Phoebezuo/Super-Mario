@@ -10,6 +10,7 @@
     "height": 700.0,
     "floorHeight": 350.0
   },
+  "targetTime": 10.00,
   "platforms": [
     {
       "x": 120.0,
@@ -95,20 +96,6 @@
     }
   ],
   "enemies": [
-    {
-      "x": 140.0,
-      "y": 330.0,
-      "path": "slimeBa.png",
-      "startLeft": false,
-      "strategy": "dumb"
-    },
-    {
-      "x": 380.0,
-      "y": 330.0,
-      "path": "slimeGa.png",
-      "startLeft": true,
-      "strategy": "dumb"
-    },
     {
       "x": 550.0,
       "y": 330.0,

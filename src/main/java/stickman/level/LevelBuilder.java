@@ -53,6 +53,8 @@ public interface LevelBuilder {
      */
     LevelBuilder setDimensions(double width, double height);
 
+    LevelBuilder setTargetTime(double targetTime);
+
     /**
      * Builds a Level object based on the previously set parameters.
      * @return The corresponding Level object

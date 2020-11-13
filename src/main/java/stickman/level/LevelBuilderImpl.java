@@ -90,6 +90,8 @@ public class LevelBuilderImpl implements LevelBuilder {
      */
     private double floorHeight;
 
+    private double targetTimee;
+
     /**
      * The GameEngine the level exists within.
      */
@@ -153,8 +155,14 @@ public class LevelBuilderImpl implements LevelBuilder {
     }
 
     @Override
+    public LevelBuilder setTargetTime(double targetTime) {
+        this.targetTimee = targetTime;
+        return this;
+    }
+
+    @Override
     public Level build() {
-        return new LevelManager(model, file, height, width, floorHeight, heroX, heroSize, heroLives, staticEntities, movingEntities, interactables);
+        return new LevelManager(model, file, height, width, floorHeight, targetTimee, heroX, heroSize, heroLives, staticEntities, movingEntities, interactables);
     }
 
     /**
@@ -170,61 +178,51 @@ public class LevelBuilderImpl implements LevelBuilder {
         JSONParser parser = new JSONParser();
 
         try {
-
             Reader reader = new FileReader(file);
-
             JSONObject object = (JSONObject) parser.parse(reader);
 
             String size = (String) object.get("stickmanSize");
             JSONObject pos = (JSONObject) object.get("stickmanPos");
             double heroX = (double) pos.get("x");
             double heroLives = (double) object.get("stickmanLives");
-
             levelBuilder.setHero(heroX, size, heroLives);
 
             JSONObject levelDimensions = (JSONObject) object.get("levelDimensions");
-
             double width = (double) levelDimensions.get("width");
             double height = (double) levelDimensions.get("height");
             double floorHeight = (double) levelDimensions.get("floorHeight");
-
             levelBuilder.setDimensions(width, height);
             levelBuilder.setFloorHeight(floorHeight);
 
-            JSONArray platforms = (JSONArray) object.get("platforms");
+            double targetTime = (double) object.get("targetTime");
+            levelBuilder.setTargetTime(targetTime);
 
+            JSONArray platforms = (JSONArray) object.get("platforms");
             Iterator<JSONObject> iterator = (Iterator<JSONObject>) platforms.iterator();
 
             // Get platforms
             while (iterator.hasNext()) {
                 JSONObject plat = (JSONObject) iterator.next();
-
                 double x = (double) plat.get("x");
                 double y = (double) plat.get("y");
-
                 levelBuilder.addStaticEntity(new Platform(x, y));
             }
 
             JSONArray mushrooms = (JSONArray) object.get("mushrooms");
-
             iterator = (Iterator<JSONObject>) mushrooms.iterator();
 
             // Get mushrooms
             while (iterator.hasNext()) {
                 JSONObject mush = (JSONObject) iterator.next();
-
                 double x = (double) mush.get("x");
                 double y = (double) mush.get("y");
-
                 Mushroom shroom = new Mushroom(x, y);
-
                 levelBuilder.addInteractable(shroom);
                 levelBuilder.addStaticEntity(shroom);
             }
 
             // Get enemies
             JSONArray enemies = (JSONArray) object.get("enemies");
-
             iterator = (Iterator<JSONObject>) enemies.iterator();
 
             // Enemy Strategies
@@ -234,16 +232,13 @@ public class LevelBuilderImpl implements LevelBuilder {
             // Get mushrooms
             while (iterator.hasNext()) {
                 JSONObject enemyJSON = (JSONObject) iterator.next();
-
                 double x = (double) enemyJSON.get("x");
                 double y = (double) enemyJSON.get("y");
                 String image = (String) enemyJSON.get("path");
                 boolean startLeft = (boolean) enemyJSON.get("startLeft");
 
                 String strategy = (String) enemyJSON.get("strategy");
-
                 EnemyStrategy strat = null;
-
                 switch (strategy) {
                     case "dumb":
                         strat = dumb;
@@ -254,18 +249,14 @@ public class LevelBuilderImpl implements LevelBuilder {
                 }
 
                 Slime enemy = new Slime(image, x, y, startLeft, strat);
-
                 levelBuilder.addInteractable(enemy);
                 levelBuilder.addEnemy(enemy);
             }
 
             JSONObject flagJSON = (JSONObject) object.get("flag");
-
             double flagX = (double) flagJSON.get("x");
             double flagY = (double) flagJSON.get("y");
-
             Flag flag = new Flag(flagX, flagY);
-
             levelBuilder.addInteractable(flag);
             levelBuilder.addStaticEntity(flag);
 

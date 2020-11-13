@@ -7,6 +7,7 @@ import stickman.entity.moving.other.Projectile;
 import stickman.entity.moving.player.Controllable;
 import stickman.entity.moving.player.StickMan;
 import stickman.model.GameEngine;
+import stickman.model.GameManager;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -59,6 +60,8 @@ public class LevelManager implements Level {
      */
     private double floorHeight;
 
+    private double targetTime;
+
     /**
      * Whether the entities should update, or the player has reached the flag.
      */
@@ -90,12 +93,13 @@ public class LevelManager implements Level {
      * @param movingEntities The list of moving entities in the level
      * @param interactables The list of entities that can interact with the hero in the level
      */
-    public LevelManager(GameEngine model, String filename, double height, double width, double floorHeight, double heroX, String heroSize, double heroLives, List<Entity> entities, List<MovingEntity> movingEntities, List<Interactable> interactables) {
+    public LevelManager(GameEngine model, String filename, double height, double width, double floorHeight, double targetTime, double heroX, String heroSize, double heroLives, List<Entity> entities, List<MovingEntity> movingEntities, List<Interactable> interactables) {
         this.model = model;
         this.filename = filename;
         this.height = height;
         this.width = width;
         this.floorHeight = floorHeight;
+        this.targetTime = targetTime;
         this.entities = entities;
         this.movingEntities = movingEntities;
         this.interactables = interactables;
@@ -174,7 +178,9 @@ public class LevelManager implements Level {
 
         // Collision between bullet and moving entity (not hero)
         for (Projectile projectile : this.projectiles) {
-            projectile.movingCollision(this.movingEntities.stream().filter(x -> x != hero).collect(Collectors.toList()));
+            if (projectile.movingCollision(this.movingEntities.stream().filter(x -> x != hero).collect(Collectors.toList()))) {
+                ((GameManager) model).addCurrentScore(100);
+            }
         }
 
         // Collision between bullet and other entity
@@ -230,13 +236,6 @@ public class LevelManager implements Level {
         return this.hero.stop();
     }
 
-//    @Override
-//    public void reset() {
-//        if (this.model != null) {
-//            this.model.reset();
-//        }
-//    }
-
     @Override
     public void shoot() {
         if (!this.hero.upgraded() || !active) {
@@ -256,12 +255,6 @@ public class LevelManager implements Level {
         this.projectiles.add(bullet);
     }
 
-    @Override
-    public String getSource() {
-        return this.filename;
-    }
-
-    @Override
     public boolean isWon() {
         return won;
     }
@@ -270,7 +263,6 @@ public class LevelManager implements Level {
         won = value;
     }
 
-    @Override
     public boolean isLose() {
         return lose;
     }
@@ -281,5 +273,17 @@ public class LevelManager implements Level {
 
     public double getHeroLives() {
         return ((StickMan) hero).getLives();
+    }
+
+    public void nextLevel() {
+        ((GameManager) this.model).nextLevel();
+    }
+
+    public void addCurrentScore(int value) {
+        ((GameManager) model).addCurrentScore(value);
+    }
+
+    public double getTargetTime() {
+        return targetTime;
     }
 }

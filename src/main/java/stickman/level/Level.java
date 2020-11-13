@@ -75,21 +75,7 @@ public interface Level {
     boolean stopMoving();
 
     /**
-     * Resets the level.
-     */
-//    void reset();
-
-    /**
      * Makes the player shoot.
      */
     void shoot();
-
-    /**
-     * Returns the source file of the level.
-     * @return The file the level is based off of
-     */
-    String getSource();
-
-    boolean isWon();
-    boolean isLose();
 }

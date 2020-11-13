@@ -77,15 +77,13 @@ public class GameWindow {
      */
     private double yViewportOffset = 0.0;
 
-    private Text timeText;
+    private Text elapsedTimeText;
+    private Text targetTimeText;
     private Text livesText;
     private Text levelText;
     private Text currentScoreText;
-    private Text totalScoreText;
-
+    private Text prevScoreText;
     private Timeline timeline;
-
-    private int tick = 0;
 
     /**
      * Creates a new GameWindow object.
@@ -118,20 +116,27 @@ public class GameWindow {
     }
 
     private void initTimeDisplay() {
-        timeText = new Text();
-        timeText.setFill(Color.BLACK);
-        timeText.setX(10.0);
-        timeText.setY(20.0);
-        timeText.setViewOrder(0.0);
-        timeText.setFont(Font.font(15));
-        pane.getChildren().add(timeText);
+        elapsedTimeText = new Text();
+        elapsedTimeText.setFill(Color.BLACK);
+        elapsedTimeText.setX(10.0);
+        elapsedTimeText.setY(20.0);
+        elapsedTimeText.setViewOrder(0.0);
+        elapsedTimeText.setFont(Font.font(15));
+
+        targetTimeText = new Text();
+        targetTimeText.setFill(Color.BLACK);
+        targetTimeText.setX(10.0);
+        targetTimeText.setY(40.0);
+        targetTimeText.setViewOrder(0.0);
+        targetTimeText.setFont(Font.font(15));
+        pane.getChildren().addAll(elapsedTimeText, targetTimeText);
     }
 
     private void initLivesDisplay() {
         livesText = new Text();
         livesText.setFill(Color.BLACK);
         livesText.setX(10.0);
-        livesText.setY(40.0);
+        livesText.setY(60.0);
         livesText.setViewOrder(0.0);
         livesText.setFont(Font.font(15));
         pane.getChildren().add(livesText);
@@ -156,21 +161,26 @@ public class GameWindow {
         currentScoreText.setFont(Font.font(15));
         pane.getChildren().add(currentScoreText);
 
-        totalScoreText = new Text();
-        totalScoreText.setFill(Color.BLACK);
-        totalScoreText.setX(500.0);
-        totalScoreText.setY(40.0);
-        totalScoreText.setViewOrder(0.0);
-        totalScoreText.setFont(Font.font(15));
-        pane.getChildren().add(totalScoreText);
+        prevScoreText = new Text();
+        prevScoreText.setFill(Color.BLACK);
+        prevScoreText.setX(500.0);
+        prevScoreText.setY(40.0);
+        prevScoreText.setViewOrder(0.0);
+        prevScoreText.setFont(Font.font(15));
+        pane.getChildren().add(prevScoreText);
     }
 
     private void updateTimeDisplay() {
-        DecimalFormat df = new DecimalFormat("0.00");
-        timeText.setText("Elapsed time: " + df.format(tick * 0.017));
+        DecimalFormat df = new DecimalFormat("0.0");
+        int tick = ((GameManager) model).getTick();
+        elapsedTimeText.setText("Elapsed Time: " + df.format(tick * 0.008));
+
+        double targetTime =  ((LevelManager) model.getCurrentLevel()).getTargetTime();
+        targetTimeText.setText("Target Time: " + targetTime);
     }
 
     private void updateLivesDisplay() {
+//        livesText.setText("Lives: " + ((GameManager) model).getLives());
         livesText.setText("Lives: " + ((LevelManager) model.getCurrentLevel()).getHeroLives());
     }
 
@@ -179,8 +189,8 @@ public class GameWindow {
     }
 
     private void updateScoreDisplay() {
-        currentScoreText.setText("Current Score:");
-        totalScoreText.setText("Total Score: ");
+        currentScoreText.setText("Current Score: " + ((GameManager) model).getCurrentScore());
+        prevScoreText.setText("Previous Score: " + ((GameManager) model).getPrevScore());
     }
 
     private void initStatusDisplay(String s) {
@@ -218,16 +228,16 @@ public class GameWindow {
     private void draw() {
         model.tick();
 
-        tick++;
+        ((GameManager) model).updateTick();
         updateTimeDisplay();
         updateLivesDisplay();
         updateLevelDisplay();
         updateScoreDisplay();
 
-        if (model.getCurrentLevel().isWon()) {
-            initStatusDisplay("You are won!");
-        } else if (model.getCurrentLevel().isLose()) {
-            initStatusDisplay("You are lose!");
+        if (((LevelManager) model.getCurrentLevel()).isWon()) {
+            initStatusDisplay("Winner");
+        } else if (((LevelManager) model.getCurrentLevel()).isLose()) {
+            initStatusDisplay("Game Over");
         }
 
         List<Entity> entities = model.getCurrentLevel().getEntities();

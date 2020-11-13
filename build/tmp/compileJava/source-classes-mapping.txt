@@ -1,5 +1,5 @@
-stickman/entity/still/Mushroom.java
- stickman.entity.still.Mushroom
+stickman/entity/moving/enemy/EnemyStrategy.java
+ stickman.entity.moving.enemy.EnemyStrategy
 stickman/view/KeyboardInputHandler.java
  stickman.view.KeyboardInputHandler
 stickman/entity/moving/other/Projectile.java
@@ -23,14 +23,12 @@ stickman/entity/still/Platform.java
  stickman.entity.still.Platform
 stickman/model/GameEngine.java
  stickman.model.GameEngine
-stickman/level/LevelManager.java
- stickman.level.LevelManager
+stickman/entity/moving/MovingObject.java
+ stickman.entity.moving.MovingObject
 stickman/level/Level.java
  stickman.level.Level
-stickman/model/GameManager.java
- stickman.model.GameManager
-stickman/view/GameWindow.java
- stickman.view.GameWindow
+stickman/entity/moving/enemy/Slime.java
+ stickman.entity.moving.enemy.Slime
 stickman/entity/Entity.java
  stickman.entity.Entity
  stickman.entity.Entity$Layer
@@ -44,18 +42,20 @@ stickman/view/BackgroundDrawer.java
  stickman.view.BackgroundDrawer
 stickman/entity/moving/enemy/DumbStrategy.java
  stickman.entity.moving.enemy.DumbStrategy
+stickman/entity/still/Mushroom.java
+ stickman.entity.still.Mushroom
+stickman/entity/moving/enemy/FollowStrategy.java
+ stickman.entity.moving.enemy.FollowStrategy
+stickman/model/GameManager.java
+ stickman.model.GameManager
+stickman/level/LevelBuilderImpl.java
+ stickman.level.LevelBuilderImpl
+stickman/level/LevelManager.java
+ stickman.level.LevelManager
 stickman/entity/moving/player/StickMan.java
  stickman.entity.moving.player.StickMan
  stickman.entity.moving.player.StickMan$Size
-stickman/entity/moving/enemy/FollowStrategy.java
- stickman.entity.moving.enemy.FollowStrategy
 stickman/App.java
  stickman.App
-stickman/entity/moving/MovingObject.java
- stickman.entity.moving.MovingObject
-stickman/entity/moving/enemy/EnemyStrategy.java
- stickman.entity.moving.enemy.EnemyStrategy
-stickman/entity/moving/enemy/Slime.java
- stickman.entity.moving.enemy.Slime
-stickman/level/LevelBuilderImpl.java
- stickman.level.LevelBuilderImpl
+stickman/view/GameWindow.java
+ stickman.view.GameWindow

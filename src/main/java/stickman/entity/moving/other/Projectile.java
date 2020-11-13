@@ -20,16 +20,17 @@ public interface Projectile extends MovingEntity {
      * both entities become inactive.
      * @param movingEntities List of moving entities in the level
      */
-    default void movingCollision(List<MovingEntity> movingEntities) {
+    default boolean movingCollision(List<MovingEntity> movingEntities) {
         for (MovingEntity movingEntity : movingEntities) {
             if (movingEntity != this) {
                 if (this.checkCollide(movingEntity) && movingEntity.isActive()) {
                     movingEntity.die();
                     this.stop();
-                    return;
+                    return true;
                 }
             }
         }
+        return false;
     }
 
     /**
@@ -42,7 +43,6 @@ public interface Projectile extends MovingEntity {
             if (entity != this) {
                 if (this.checkCollide(entity) && entity.isSolid()) {
                     this.stop();
-                    return;
                 }
             }
         }
