@@ -75,7 +75,6 @@ public class StickMan extends MovingObject implements Controllable {
      */
     private boolean leftFacing;
 
-    private double lives;
     private double initXPos;
     private double initYPos;
 
@@ -86,13 +85,12 @@ public class StickMan extends MovingObject implements Controllable {
      * @param size The size of the player.
      * @param level The level the player exists within.
      */
-    public StickMan(double x, double y, String size, double lives, Level level) {
+    public StickMan(double x, double y, String size, Level level) {
         super("ch_stand1.png", x, y, 0, 0, Layer.FOREGROUND);
 
         this.level = level;
         this.upgraded = false;
         this.leftFacing = false;
-        this.lives = lives;
 
         if (size.equals("normal")) {
             this.size = Size.NORMAL;
@@ -225,9 +223,4 @@ public class StickMan extends MovingObject implements Controllable {
         this.leftFacing = false;
         this.imagePath = "ch_stand1.png";
     }
-
-    public double getLives() {
-        return lives;
-    }
-
 }

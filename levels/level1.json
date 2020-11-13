@@ -3,7 +3,6 @@
   "stickmanPos": {
     "x": 50.0
   },
-  "stickmanLives": 2.0,
   "cloudVelocity": 3.2,
   "levelDimensions": {
     "width": 600.0,

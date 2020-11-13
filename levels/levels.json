@@ -1,8 +1,8 @@
 {
   "levelFiles": [
-    "vertical.json",
-    "empty.json",
-    "default.json"
+    "level1.json",
+    "level2.json",
+    "level3.json"
   ],
   "stickmanLives": 2.0
 }

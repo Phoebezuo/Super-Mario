@@ -36,7 +36,7 @@ public interface LevelBuilder {
      * @param size The size of the hero
      * @return This instance of LevelBuilder
      */
-    LevelBuilder setHero(double x, String size, double heroLives);
+    LevelBuilder setHero(double x, String size);
 
     /**
      * Sets the height of the floor in the level.

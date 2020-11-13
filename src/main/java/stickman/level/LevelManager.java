@@ -93,7 +93,7 @@ public class LevelManager implements Level {
      * @param movingEntities The list of moving entities in the level
      * @param interactables The list of entities that can interact with the hero in the level
      */
-    public LevelManager(GameEngine model, String filename, double height, double width, double floorHeight, double targetTime, double heroX, String heroSize, double heroLives, List<Entity> entities, List<MovingEntity> movingEntities, List<Interactable> interactables) {
+    public LevelManager(GameEngine model, String filename, double height, double width, double floorHeight, double targetTime, double heroX, String heroSize, List<Entity> entities, List<MovingEntity> movingEntities, List<Interactable> interactables) {
         this.model = model;
         this.filename = filename;
         this.height = height;
@@ -107,7 +107,7 @@ public class LevelManager implements Level {
         this.projectiles = new ArrayList<>();
 
         // Create new hero
-        this.hero = new StickMan(heroX, floorHeight, heroSize, heroLives, this);
+        this.hero = new StickMan(heroX, floorHeight, heroSize,this);
         this.movingEntities.add(this.hero);
 
         // Ensure entities has all entities (including moving ones)

@@ -1,16 +1,6 @@
 package stickman.model;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import stickman.level.*;
-
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -39,7 +29,9 @@ public class GameManager implements GameEngine {
      * @param levels The config file containing the names of all the levels
      */
     public GameManager(String levels) {
-        this.levelFileNames = this.readConfigFile(levels);
+        ConfigFile configFile = ConfigFile.getConfigFile(levels);
+        this.heroLives = configFile.getHeroLives();
+        this.levelFileNames = configFile.getLevelFileNames();
         this.level = LevelBuilderImpl.generateFromFile(levelFileNames.get(currentLevel), this);
     }
 
@@ -120,44 +112,6 @@ public class GameManager implements GameEngine {
 
     public int getPrevScore() {
         return prevScore;
-    }
-
-
-    /**
-     * Retrieves the list of level filenames from a config file
-     * @param config The config file
-     * @return The list of level names
-     */
-    @SuppressWarnings("unchecked")
-    private List<String> readConfigFile(String config) {
-
-        List<String> res = new ArrayList<>();
-        JSONParser parser = new JSONParser();
-
-        try {
-            Reader reader = new FileReader(config);
-            JSONObject object = (JSONObject) parser.parse(reader);
-
-            JSONArray levelFiles = (JSONArray) object.get("levelFiles");
-            Iterator<String> iterator = (Iterator<String>) levelFiles.iterator();
-            // Get level file names
-            while (iterator.hasNext()) {
-                String file = iterator.next();
-                res.add("levels/" + file);
-            }
-
-            // TODO
-            heroLives = (double) object.get("stickmanLives");
-            System.out.printf("lives: %f\n", heroLives);
-
-        } catch (IOException e) {
-            System.exit(10);
-            return null;
-        } catch (ParseException e) {
-            return null;
-        }
-
-        return res;
     }
 
 }
