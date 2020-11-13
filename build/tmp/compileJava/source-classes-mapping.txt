@@ -38,10 +38,10 @@ stickman/entity/Entity.java
  stickman.entity.Entity$Layer
 stickman/entity/moving/MovingEntity.java
  stickman.entity.moving.MovingEntity
-stickman/entity/GameObject.java
- stickman.entity.GameObject
 stickman/entity/moving/other/Bullet.java
  stickman.entity.moving.other.Bullet
+stickman/entity/GameObject.java
+ stickman.entity.GameObject
 stickman/view/BackgroundDrawer.java
  stickman.view.BackgroundDrawer
 stickman/entity/moving/enemy/DumbStrategy.java

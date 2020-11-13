@@ -118,10 +118,8 @@ public class LevelManager implements Level {
         this.active = true;
     }
 
-    private LevelManager(StickMan hero, double height, double width, double floorHeight, double targetTime,
+    private LevelManager(Entity hero, double floorHeight, double targetTime,
                          List<Entity> entities, List<MovingEntity> movingEntities, List<Interactable> interactables) {
-        this.height = height;
-        this.width = width;
         this.floorHeight = floorHeight;
         this.targetTime = targetTime;
         this.entities = entities;
@@ -130,7 +128,7 @@ public class LevelManager implements Level {
         this.projectiles = new ArrayList<>();
 
         // Create new hero
-        this.hero = hero;
+        this.hero = (Controllable) hero;
         this.movingEntities.add(this.hero);
 
         // Ensure entities has all entities (including moving ones)
@@ -158,25 +156,7 @@ public class LevelManager implements Level {
             copiedProjectiles.add((Projectile) p.deepCopy());
         }
 
-//        for (Entity e : copiedEntities) {
-//            System.out.println(e);
-//        }
-//        System.out.println("-----------------");
-//
-//        for (Entity e : copiedMovingEntities) {
-//            System.out.println(e);
-//        }
-//        System.out.println("-----------------");
-//
-//        for (Entity e : copiedInteractables) {
-//            System.out.println(e);
-//        }
-//        System.out.println("-----------------");
-//
-//        for (Entity e : copiedProjectiles) {
-//            System.out.println(e);
-//        }
-        return new LevelManager((StickMan) this.hero.deepCopy(), height, width, floorHeight, targetTime, entities, movingEntities, interactables);
+        return new LevelManager(this.hero.deepCopy(), floorHeight, targetTime, entities, movingEntities, interactables);
     }
 
     @Override
