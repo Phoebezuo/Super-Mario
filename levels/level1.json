@@ -9,7 +9,7 @@
     "height": 1000.0,
     "floorHeight": 900.0
   },
-  "targetTime": 10.00,
+  "targetTime": 10.0,
   "platforms": [
     {
       "x": 100.0,

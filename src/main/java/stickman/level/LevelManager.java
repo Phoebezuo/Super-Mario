@@ -179,7 +179,7 @@ public class LevelManager implements Level {
         // Collision between bullet and moving entity (not hero)
         for (Projectile projectile : this.projectiles) {
             if (projectile.movingCollision(this.movingEntities.stream().filter(x -> x != hero).collect(Collectors.toList()))) {
-                ((GameManager) model).addCurrentScore(100);
+                ((GameManager) model).changeCurrentScore(100);
             }
         }
 
@@ -278,8 +278,8 @@ public class LevelManager implements Level {
         ((GameManager) this.model).nextLevel();
     }
 
-    public void addCurrentScore(int value) {
-        ((GameManager) model).addCurrentScore(value);
+    public void changeCurrentScore(int value) {
+        ((GameManager) model).changeCurrentScore(value);
     }
 
     public double getTargetTime() {

@@ -85,6 +85,9 @@ public class GameWindow {
     private Text prevScoreText;
     private Timeline timeline;
 
+    private int counter = 0;
+    private double displayTime = 0.0;
+
     /**
      * Creates a new GameWindow object.
      * @param model The GameEngine of the game
@@ -170,26 +173,34 @@ public class GameWindow {
         pane.getChildren().add(prevScoreText);
     }
 
-    private void updateTimeDisplay() {
-        DecimalFormat df = new DecimalFormat("0.0");
-        int tick = ((GameManager) model).getTick();
-        elapsedTimeText.setText("Elapsed Time: " + df.format(tick * 0.008));
-
+    private void updateDisplay() {
+        double elapsedTime = Math.round(((GameManager) model).getTick() * 0.009 * 10) / 10.0;
         double targetTime =  ((LevelManager) model.getCurrentLevel()).getTargetTime();
+
+        if (elapsedTime < targetTime) {
+            counter++;
+            if (counter == 100) {
+                displayTime++;
+                ((GameManager) model).changeCurrentScore(1);
+                counter = 0;
+            }
+        } else {
+            counter++;
+            if (counter == 100) {
+                displayTime++;
+                if (((GameManager) model).getCurrentScore() > 0) {
+                    ((GameManager) model).changeCurrentScore(-1);
+                }
+                counter = 0;
+            }
+        }
+
+        elapsedTimeText.setText("Elapsed Time: " + elapsedTime);
         targetTimeText.setText("Target Time: " + targetTime);
-    }
-
-    private void updateLivesDisplay() {
-        livesText.setText("Lives: " + ((GameManager) model).getLives());
-    }
-
-    private void updateLevelDisplay() {
-        levelText.setText("Level " + ((GameManager) model).getLevel());
-    }
-
-    private void updateScoreDisplay() {
         currentScoreText.setText("Current Score: " + ((GameManager) model).getCurrentScore());
         prevScoreText.setText("Previous Score: " + ((GameManager) model).getPrevScore());
+        livesText.setText("Lives: " + ((GameManager) model).getLives());
+        levelText.setText("Level " + ((GameManager) model).getLevel());
     }
 
     private void initStatusDisplay(String s) {
@@ -228,10 +239,7 @@ public class GameWindow {
         model.tick();
 
         ((GameManager) model).updateTick();
-        updateTimeDisplay();
-        updateLivesDisplay();
-        updateLevelDisplay();
-        updateScoreDisplay();
+        updateDisplay();
 
         if (((LevelManager) model.getCurrentLevel()).isWon()) {
             initStatusDisplay("Winner");

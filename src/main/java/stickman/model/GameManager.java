@@ -102,7 +102,7 @@ public class GameManager implements GameEngine {
         return heroLives;
     }
 
-    public void addCurrentScore(int value) {
+    public void changeCurrentScore(int value) {
         currentScore += value;
     }
 
