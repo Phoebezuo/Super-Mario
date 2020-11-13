@@ -184,10 +184,8 @@ public class StickMan extends MovingObject implements Controllable {
 
     @Override
     public void die() {
-        lives--;
-        if (lives == 0.0) {
-            ((LevelManager) level).setLose(true);
-        }
+        ((LevelManager) level).decreaseLives();
+
         this.xPos = this.initXPos;
         this.yPos = this.initYPos;
     }

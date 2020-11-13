@@ -267,14 +267,13 @@ public class LevelManager implements Level {
         return lose;
     }
 
-    public void setLose(boolean value) {
-        lose = value;
+    public void decreaseLives() {
+        ((GameManager) model).decreaseLives();
+        double currentLives = ((GameManager) model).getLives();
+        if (currentLives == 0.0) {
+            lose = true;
+        }
     }
-
-    public double getHeroLives() {
-        return ((StickMan) hero).getLives();
-    }
-
     public void nextLevel() {
         ((GameManager) this.model).nextLevel();
     }

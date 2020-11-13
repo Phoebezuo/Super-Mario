@@ -180,8 +180,7 @@ public class GameWindow {
     }
 
     private void updateLivesDisplay() {
-//        livesText.setText("Lives: " + ((GameManager) model).getLives());
-        livesText.setText("Lives: " + ((LevelManager) model.getCurrentLevel()).getHeroLives());
+        livesText.setText("Lives: " + ((GameManager) model).getLives());
     }
 
     private void updateLevelDisplay() {
