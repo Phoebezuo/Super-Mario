@@ -10,6 +10,7 @@ import stickman.model.GameEngine;
 import stickman.model.GameManager;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -118,8 +119,10 @@ public class LevelManager implements Level {
         this.active = true;
     }
 
-    private LevelManager(String filename, double height, double width, double floorHeight, double targetTime, boolean active,
-                         Entity hero, List<Entity> entities, List<MovingEntity> movingEntities, List<Interactable> interactables) {
+    private LevelManager(GameEngine model, String filename, double height, double width, double floorHeight,
+                         double targetTime, boolean active, Entity hero, List<Entity> entities,
+                         List<MovingEntity> movingEntities, List<Interactable> interactables) {
+        this.model = model;
         this.filename = filename;
         this.height = height;
         this.width = width;
@@ -143,30 +146,54 @@ public class LevelManager implements Level {
     }
 
     public LevelManager deepCopy() {
+
+//        System.out.println("entities:------");
+//        for (Entity e : entities) {
+//            System.out.println(e);
+//        }
+//        System.out.println("moving:------");
+//        for (MovingEntity m: movingEntities) {
+//            System.out.println(m);
+//        }
+//        System.out.println("interact:------");
+//        for (Interactable i: interactables) {
+//            System.out.println(i);
+//        }
+
         List<Entity> copiedEntities = new ArrayList<>();
         List<MovingEntity> copiedMovingEntities = new ArrayList<>();
         List<Interactable> copiedInteractables = new ArrayList<>();
 
+        // current copiedEntities contains all platforms
         for (Entity e : entities) {
-            if (!(e.getImagePath().equals("ch_stand1.png"))) {
+            if (e.getImagePath().equals("foot_tile.png")) {
                 copiedEntities.add(e.deepCopy());
             }
         }
+
+        // current copiedMovingEntities contains all enemies
         for (MovingEntity m: movingEntities) {
-            if (!(m.getImagePath().equals("ch_stand1.png"))) {
+            if (m.getImagePath().startsWith("slime")) {
                 copiedMovingEntities.add((MovingEntity) m.deepCopy());
             }
         }
 
+        // current copiedInteractables contains mushroom and flag.
         for (Interactable i: interactables) {
-            if (!(i.getImagePath().equals("ch_stand1.png"))) {
+            if (!(i.getImagePath().startsWith("slime"))) {
                 copiedInteractables.add((Interactable) i.deepCopy());
             }
         }
 
-//        copiedEntities.addAll(copiedMovingEntities);
-//        copiedEntities.addAll(copiedInteractables);
-        return new LevelManager(filename, height, width, floorHeight, targetTime, active,
+        // copy mushroom and flag in copiedInteractables to copiedEntities
+        copiedEntities.addAll(copiedInteractables);
+
+        // copy enemies in copiedMovingEntities to copiedInteractables
+        for (MovingEntity m: copiedMovingEntities) {
+            copiedInteractables.add((Interactable) m);
+        }
+
+        return new LevelManager(model, filename, height, width, floorHeight, targetTime, active,
                 this.hero.deepCopy(), copiedEntities, copiedMovingEntities, copiedInteractables);
     }
 

@@ -107,9 +107,32 @@ public class StickMan extends MovingObject implements Controllable {
         this.initYPos = this.yPos;
     }
 
+    public StickMan(double x, double y, String size, Level level, boolean upgraded) {
+        super("ch_stand1.png", x, y, 0, 0, Layer.FOREGROUND);
+
+        this.level = level;
+        this.upgraded = false;
+        this.leftFacing = false;
+
+        if (size.equals("normal")) {
+            this.size = Size.NORMAL;
+            this.width = NORMAL_WIDTH;
+            this.height = NORMAL_HEIGHT;
+        } else if (size.equals("large")) {
+            this.size = Size.LARGE;
+            this.width = LARGE_WIDTH;
+            this.height = LARGE_HEIGHT;
+        }
+
+        this.yPos -= this.height;
+        this.initXPos = this.xPos;
+        this.initYPos = this.yPos;
+        this.upgraded = upgraded;
+    }
+
     @Override
     public Entity deepCopy() {
-        return new StickMan(this.getXPos(), this.getYPos(), this.size.toString().toLowerCase(), this.level);
+        return new StickMan(this.getXPos(), this.getYPos(), this.size.toString().toLowerCase(), this.level, this.upgraded);
     }
 
     @Override
