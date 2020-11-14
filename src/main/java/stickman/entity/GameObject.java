@@ -60,6 +60,10 @@ public abstract class GameObject implements Entity {
         this.active = true;
     }
 
+    /**
+     * copy all the information of a single entity
+     * @return copy version of current entity
+     */
     @Override
     public abstract Entity deepCopy();
 

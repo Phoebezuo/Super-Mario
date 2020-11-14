@@ -88,6 +88,9 @@ public class LevelBuilderImpl implements LevelBuilder {
      */
     private double floorHeight;
 
+    /**
+     * The target time of current level to meet, if exceed will decrease score
+     */
     private double targetTimee;
 
     /**

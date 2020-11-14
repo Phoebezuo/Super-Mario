@@ -34,9 +34,6 @@ public abstract class MovingObject extends GameObject implements MovingEntity {
     }
 
     @Override
-    public abstract Entity deepCopy();
-
-    @Override
     public void die() {
         this.active = false;
     }

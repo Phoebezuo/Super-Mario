@@ -20,15 +20,40 @@ public class GameManager implements GameEngine {
      */
     private List<String> levelFileNames;
 
+    /**
+     * The current level number
+     */
     private int currentLevel = 0;
+
+    /**
+     * The current number of lives left
+     */
     private double heroLives;
+
+    /**
+     * The score of current level
+     */
     private int currentScore = 0;
+
+    /**
+     * The total score of previous levels
+     */
     private int prevScore = 0;
 
-    private double startTime = System.currentTimeMillis();
+    /**
+     * Record the start of level
+     */
+    private double startTime;
 
-    private Originator originator = new Originator();
-    private Caretaker careTaker = new Caretaker();
+    /**
+     * Create memento containing a snapshot of current level
+     */
+    private Originator originator;
+
+    /**
+     * Responsible for memento's safekeeping
+     */
+    private Caretaker careTaker;
 
     /**
      * Creates a GameManager object.
@@ -38,6 +63,9 @@ public class GameManager implements GameEngine {
         ConfigFile configFile = ConfigFile.getConfigFile(levels);
         this.heroLives = configFile.getHeroLives();
         this.levelFileNames = configFile.getLevelFileNames();
+        this.startTime = System.currentTimeMillis();
+        this.originator = new Originator();
+        this.careTaker = new Caretaker();
         this.level = LevelBuilderImpl.generateFromFile(levelFileNames.get(currentLevel), this);
     }
 
@@ -80,6 +108,21 @@ public class GameManager implements GameEngine {
         this.level.shoot();
     }
 
+    @Override
+    public void save() {
+        System.out.println("Save");
+        LevelManager copiedLevel = ((LevelManager) level).deepCopy();
+        originator.setState(copiedLevel);
+        careTaker.add(originator.createMemento());
+    }
+
+    @Override
+    public void load() {
+        System.out.println("Load");
+        originator.setMomento(careTaker.get());
+        this.level = originator.getState();
+    }
+
     public int getLevel() {
         return currentLevel + 1;
     }
@@ -112,20 +155,16 @@ public class GameManager implements GameEngine {
         return currentScore;
     }
 
+    public void setCurrentScore(int value) {
+        currentScore = value;
+        System.out.printf("current score should change: %d\n", currentScore);
+    }
+
     public int getPrevScore() {
         return prevScore;
     }
 
-    public void save() {
-        System.out.println("Save");
-        LevelManager copiedLevel = ((LevelManager) level).deepCopy();
-        originator.setState(copiedLevel);
-        careTaker.add(originator.createMemento());
-    }
-
-    public void load() {
-        System.out.println("Load");
-        originator.setMomento(careTaker.get());
-        this.level = originator.getState();
+    public void setPrevScore(int value) {
+        prevScore = value;
     }
 }

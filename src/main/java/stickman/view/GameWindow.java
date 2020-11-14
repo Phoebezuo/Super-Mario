@@ -76,13 +76,44 @@ public class GameWindow {
      */
     private double yViewportOffset = 0.0;
 
+    /**
+     * The display of elapsed time
+     */
     private Text elapsedTimeText;
+
+    /**
+     * The display of target time
+     */
     private Text targetTimeText;
+
+    /**
+     * The display of lives left
+     */
     private Text livesText;
+
+    /**
+     * The display of current level number
+     */
     private Text levelText;
+
+    /**
+     * The display of current score
+     */
     private Text currentScoreText;
+
+    /**
+     * The display of total previous score
+     */
     private Text prevScoreText;
+
+    /**
+     * The timeline of window
+     */
     private Timeline timeline;
+
+    /**
+     * update saved time every second
+     */
     private double savedTime = 0;
 
     /**
@@ -97,16 +128,13 @@ public class GameWindow {
         this.width = width;
         this.height = height;
         this.scene = new Scene(pane, width, height);
-
         this.entityViews = new ArrayList<>();
 
         KeyboardInputHandler keyboardInputHandler = new KeyboardInputHandler(model);
-
         scene.setOnKeyPressed(keyboardInputHandler::handlePressed);
         scene.setOnKeyReleased(keyboardInputHandler::handleReleased);
 
         this.backgroundDrawer = new BlockedBackground();
-
         backgroundDrawer.draw(model, pane);
 
         initTimeDisplay();
@@ -115,6 +143,9 @@ public class GameWindow {
         initScoreDisplay();
     }
 
+    /**
+     * Text display of elapsed time
+     */
     private void initTimeDisplay() {
         elapsedTimeText = new Text();
         elapsedTimeText.setFill(Color.BLACK);
@@ -132,6 +163,9 @@ public class GameWindow {
         pane.getChildren().addAll(elapsedTimeText, targetTimeText);
     }
 
+    /**
+     * Text display of lives left
+     */
     private void initLivesDisplay() {
         livesText = new Text();
         livesText.setFill(Color.BLACK);
@@ -142,6 +176,9 @@ public class GameWindow {
         pane.getChildren().add(livesText);
     }
 
+    /**
+     * Text display of current level number
+     */
     private void initLevelDisplay() {
         levelText = new Text();
         levelText.setFill(Color.BLACK);
@@ -152,6 +189,9 @@ public class GameWindow {
         pane.getChildren().add(levelText);
     }
 
+    /**
+     * Text display of current and previous score
+     */
     private void initScoreDisplay() {
         currentScoreText = new Text();
         currentScoreText.setFill(Color.BLACK);
@@ -170,6 +210,9 @@ public class GameWindow {
         pane.getChildren().add(prevScoreText);
     }
 
+    /**
+     * Update display including time, score, level number, lives, every frame
+     */
     private void updateDisplay() {
         double startTime = ((GameManager) model).getStartTime();
         double elapsedTime = Math.round((System.currentTimeMillis() - startTime) / 1000 * 10) / 10.0;
@@ -197,6 +240,10 @@ public class GameWindow {
         levelText.setText("Level " + ((GameManager) model).getLevel());
     }
 
+    /**
+     * Text display winner or game over
+     * @param s String that need to display
+     */
     private void initStatusDisplay(String s) {
         this.pane.getChildren().clear();
         Text text = new Text(s);

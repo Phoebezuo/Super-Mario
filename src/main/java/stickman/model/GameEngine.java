@@ -48,4 +48,13 @@ public interface GameEngine {
      */
     void shoot();
 
+    /**
+     * Enable quick save current version of level
+     */
+    void save();
+
+    /**
+     * Enable quick load from previous version of level
+     */
+    void load();
 }

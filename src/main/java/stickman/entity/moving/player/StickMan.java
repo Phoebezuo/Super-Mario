@@ -75,7 +75,14 @@ public class StickMan extends MovingObject implements Controllable {
      */
     private boolean leftFacing;
 
+    /**
+     * The initial x position of hero
+     */
     private double initXPos;
+
+    /**
+     * The initial y position of hero
+     */
     private double initYPos;
 
     /**
@@ -107,6 +114,14 @@ public class StickMan extends MovingObject implements Controllable {
         this.initYPos = this.yPos;
     }
 
+    /**
+     * Create a new StickMan object
+     * @param x The x-coordinate
+     * @param y The y-coordinate
+     * @param size The size of the player
+     * @param level The current level
+     * @param upgraded Whether the hero is upgraded or not
+     */
     public StickMan(double x, double y, String size, Level level, boolean upgraded) {
         super("ch_stand1.png", x, y, 0, 0, Layer.FOREGROUND);
 

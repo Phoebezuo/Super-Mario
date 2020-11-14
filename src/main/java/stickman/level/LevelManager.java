@@ -10,7 +10,6 @@ import stickman.model.GameEngine;
 import stickman.model.GameManager;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -61,6 +60,9 @@ public class LevelManager implements Level {
      */
     private double floorHeight;
 
+    /**
+     * The target time of current level
+     */
     private double targetTime;
 
     /**
@@ -78,7 +80,14 @@ public class LevelManager implements Level {
      */
     private GameEngine model;
 
+    /**
+     * Whether player won the game or not
+     */
     private boolean won;
+
+    /**
+     * Whether player lose the game or not
+     */
     private boolean lose;
 
     /**
@@ -88,6 +97,7 @@ public class LevelManager implements Level {
      * @param height The height of the level
      * @param width The width of the level
      * @param floorHeight The height of the floor
+     * @param targetTime The target time of the level
      * @param heroX The starting x of the hero
      * @param heroSize The size of the hero
      * @param entities The list of entities in the level
@@ -119,6 +129,20 @@ public class LevelManager implements Level {
         this.active = true;
     }
 
+    /**
+     * Create a new LevelManager object for save current level operation.
+     * @param model The GameEngine the level is in
+     * @param filename The file the level is based off of
+     * @param height The height of the level
+     * @param width The width of the level
+     * @param floorHeight The height of the floor
+     * @param targetTime The target time of the level
+     * @param active The active states of level
+     * @param hero The hero that can be controlled
+     * @param entities The list of entities in the level
+     * @param movingEntities The list of moving entities in the level
+     * @param interactables The list of entities that can interact with the hero in the level
+     */
     private LevelManager(GameEngine model, String filename, double height, double width, double floorHeight,
                          double targetTime, boolean active, Entity hero, List<Entity> entities,
                          List<MovingEntity> movingEntities, List<Interactable> interactables) {
@@ -145,20 +169,11 @@ public class LevelManager implements Level {
         this.active = true;
     }
 
+    /**
+     * Create a copy version of LevelManager object that contains all the information
+     * @return The LevelManager object contains all information
+     */
     public LevelManager deepCopy() {
-
-//        System.out.println("entities:------");
-//        for (Entity e : entities) {
-//            System.out.println(e);
-//        }
-//        System.out.println("moving:------");
-//        for (MovingEntity m: movingEntities) {
-//            System.out.println(m);
-//        }
-//        System.out.println("interact:------");
-//        for (Interactable i: interactables) {
-//            System.out.println(i);
-//        }
 
         List<Entity> copiedEntities = new ArrayList<>();
         List<MovingEntity> copiedMovingEntities = new ArrayList<>();
@@ -193,6 +208,11 @@ public class LevelManager implements Level {
             copiedInteractables.add((Interactable) m);
         }
 
+        int currentScore = ((GameManager) model).getCurrentScore();
+        int prevScore = ((GameManager) model).getPrevScore();
+        ((GameManager) model).setCurrentScore(currentScore);
+        ((GameManager) model).setPrevScore(prevScore);
+        System.out.printf("current score original is: %d\n", currentScore);
         return new LevelManager(model, filename, height, width, floorHeight, targetTime, active,
                 this.hero.deepCopy(), copiedEntities, copiedMovingEntities, copiedInteractables);
     }
@@ -257,7 +277,10 @@ public class LevelManager implements Level {
 
         // Collision between bullet and moving entity (not hero)
         for (Projectile projectile : this.projectiles) {
-            if (projectile.movingCollision(this.movingEntities.stream().filter(x -> x != hero).collect(Collectors.toList()))) {
+            boolean collide = projectile.movingCollision(
+                    this.movingEntities.stream().filter(x -> x != hero).collect(Collectors.toList())
+            );
+            if (collide) {
                 ((GameManager) model).changeCurrentScore(100);
             }
         }
@@ -334,18 +357,33 @@ public class LevelManager implements Level {
         this.projectiles.add(bullet);
     }
 
+    /**
+     * Check current is won or not
+     * @return boolean to indicate player is won or not
+     */
     public boolean isWon() {
         return won;
     }
 
+    /**
+     * Set current won state to be a value
+     * @param value boolean to be set
+     */
     public void setWon(boolean value) {
         won = value;
     }
 
+    /**
+     * Check current is lose or not
+     * @return boolean to indicate player is lose or not
+     */
     public boolean isLose() {
         return lose;
     }
 
+    /**
+     * Decrease the lives of stickman, when the live is 0, set the player lose the game
+     */
     public void decreaseLives() {
         ((GameManager) model).decreaseLives();
         double currentLives = ((GameManager) model).getLives();
@@ -353,14 +391,26 @@ public class LevelManager implements Level {
             lose = true;
         }
     }
+
+    /**
+     * Load the next level
+     */
     public void nextLevel() {
         ((GameManager) this.model).nextLevel();
     }
 
+    /**
+     * Change the current score to a certain value
+     * @param value integer that score set to be
+     */
     public void changeCurrentScore(int value) {
         ((GameManager) model).changeCurrentScore(value);
     }
 
+    /**
+     * Retrive target time
+     * @return the target time
+     */
     public double getTargetTime() {
         return targetTime;
     }

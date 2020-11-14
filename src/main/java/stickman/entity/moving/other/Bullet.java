@@ -25,6 +25,9 @@ public class Bullet extends MovingObject implements Projectile {
      */
     public static final double BULLET_HEIGHT = 10;
 
+    /**
+     * Whether the direction of bullet is left or not
+     */
     private boolean left;
 
     /**

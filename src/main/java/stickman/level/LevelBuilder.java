@@ -53,6 +53,11 @@ public interface LevelBuilder {
      */
     LevelBuilder setDimensions(double width, double height);
 
+    /**
+     * Sets the target time of the level.
+     * @param targetTime The target time of level
+     * @return his instance of LevelBuilder
+     */
     LevelBuilder setTargetTime(double targetTime);
 
     /**

@@ -12,13 +12,30 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * Manage the configuration of overall application
+ */
 public class ConfigFile {
 
+    /**
+     * The private instance that save all the information
+     */
     private static ConfigFile configFile = null;
 
+    /**
+     * A list of filenames coresponding to different levels
+     */
     private List<String> levelFileNames = new ArrayList<>();
+
+    /**
+     * The number of lives that hero will have
+     */
     private double heroLives = 0;
 
+    /**
+     * Constructor to create ConfigFile object
+     * @param config private instance that contains configuration information of whole game
+     */
     @SuppressWarnings("unchecked")
     private ConfigFile(String config) {
         JSONParser parser = new JSONParser();
@@ -45,6 +62,11 @@ public class ConfigFile {
         }
     }
 
+    /**
+     * Get the ConfigFile object instance
+     * @param config filename of overall application
+     * @return the private ConfigFile instance
+     */
     public static ConfigFile getConfigFile(String config) {
         if (configFile == null) {
             configFile = new ConfigFile(config);
@@ -52,10 +74,18 @@ public class ConfigFile {
         return configFile;
     }
 
+    /**
+     * Get a list of level configuration filenames
+     * @return list of level configuration filenames
+     */
     public List<String> getLevelFileNames() {
         return levelFileNames;
     }
 
+    /**
+     * Get the hero lives which is set from configuration file
+     * @return hero lives
+     */
     public double getHeroLives() {
         return heroLives;
     }

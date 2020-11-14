@@ -54,6 +54,10 @@ public interface Entity {
      */
     boolean isActive();
 
+    /**
+     * copy all the information of a single entity
+     * @return copy version of current entity
+     */
     Entity deepCopy();
 
     /**
