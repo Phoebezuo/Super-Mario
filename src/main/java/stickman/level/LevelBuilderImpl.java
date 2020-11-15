@@ -174,7 +174,6 @@ public class LevelBuilderImpl implements LevelBuilder {
     public static Level generateFromFile(String file, GameEngine model) {
 
         LevelBuilder levelBuilder = new LevelBuilderImpl(file, model);
-
         JSONParser parser = new JSONParser();
 
         try {
