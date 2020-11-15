@@ -10,9 +10,9 @@ gradle run
           Features that Implements
 ############################################
 
-1. Level Transitions
-2. Score and Time
-3. Save and Load
+1. All features in Level Transitions
+2. All features in Score and Time
+3. All features in Save and Load
 
 
 
@@ -32,3 +32,11 @@ gradle run
 
 1. save -> S key
 2. load -> L key
+
+
+
+############################################
+                 Notes
+############################################
+
+Configuration file is different than codebase, please redownload updated JSON file
