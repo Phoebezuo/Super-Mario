@@ -222,12 +222,16 @@ public class GameWindow {
             if (elapsedTime - savedTime == 1) {
                 ((GameManager) model).changeCurrentScore(1);
                 savedTime = elapsedTime;
+            } else if (elapsedTime - savedTime < 0) {
+                savedTime = elapsedTime;
             }
         } else {
             if (elapsedTime - savedTime == 1) {
                 if (((GameManager) model).getCurrentScore() > 0) {
                     ((GameManager) model).changeCurrentScore(-1);
                 }
+                savedTime = elapsedTime;
+            } else if (elapsedTime - savedTime < 0) {
                 savedTime = elapsedTime;
             }
         }

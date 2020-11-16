@@ -20,8 +20,10 @@ gradle run
               Design Patterns
 ############################################
 
-1. Singleton Design Patterns at `ConfigFile.java` in `model` package.
-2. Memento Design Patterns at `Caretaker.java` `Memento.java`
+1. Prototype Design Pattern at `Entity.java`, `Flag.java`, `Mushroom.java`,
+    `Platform.java`, `StickMan.java`, `Bullet.java` and `Slime.java`.
+2. Singleton Design Patterns at `ConfigFile.java` in `model` package.
+3. Memento Design Patterns at `Caretaker.java` `Memento.java`
     and `Originator` in `SaveLoad` package.
 
 
@@ -39,4 +41,5 @@ gradle run
                  Notes
 ############################################
 
-Configuration file is different than codebase, please redownload updated JSON file
+Configuration file is different than codebase,
+please re-download updated JSON file.

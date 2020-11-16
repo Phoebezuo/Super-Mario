@@ -10,11 +10,23 @@ public class Memento {
     private LevelManager levelManager;
 
     /**
+     * Current score in saved version
+     */
+    private int currentScore;
+
+    /**
+     * Previous score in saved version
+     */
+    private int prevScore;
+
+    /**
      * Create a Memento object with level information
      * @param levelManager store all the level information
      */
-    public Memento(LevelManager levelManager) {
+    public Memento(LevelManager levelManager, int currentScore, int prevScore) {
         this.levelManager = levelManager;
+        this.currentScore = currentScore;
+        this.prevScore = prevScore;
     }
 
     /**
@@ -23,5 +35,21 @@ public class Memento {
      */
     public LevelManager getState() {
         return levelManager;
+    }
+
+    /**
+     * Get current score
+     * @return current score
+     */
+    public int getCurrentScore() {
+        return currentScore;
+    }
+
+    /**
+     * Get previous score
+     * @return previous score
+     */
+    public int getPrevScore() {
+        return prevScore;
     }
 }

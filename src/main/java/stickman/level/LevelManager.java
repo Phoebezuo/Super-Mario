@@ -208,11 +208,6 @@ public class LevelManager implements Level {
             copiedInteractables.add((Interactable) m);
         }
 
-        int currentScore = ((GameManager) model).getCurrentScore();
-        int prevScore = ((GameManager) model).getPrevScore();
-        ((GameManager) model).setCurrentScore(currentScore);
-        ((GameManager) model).setPrevScore(prevScore);
-        System.out.printf("current score original is: %d\n", currentScore);
         return new LevelManager(model, filename, height, width, floorHeight, targetTime, active,
                 this.hero.deepCopy(), copiedEntities, copiedMovingEntities, copiedInteractables);
     }

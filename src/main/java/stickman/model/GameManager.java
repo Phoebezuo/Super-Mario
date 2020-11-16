@@ -110,17 +110,17 @@ public class GameManager implements GameEngine {
 
     @Override
     public void save() {
-        System.out.println("Save");
         LevelManager copiedLevel = ((LevelManager) level).deepCopy();
-        originator.setState(copiedLevel);
+        originator.setState(copiedLevel, currentScore, prevScore);
         careTaker.add(originator.createMemento());
     }
 
     @Override
     public void load() {
-        System.out.println("Load");
         originator.setMomento(careTaker.get());
         this.level = originator.getState();
+        this.currentScore = originator.getCurrentScore();
+        this.prevScore = originator.getPrevScore();
     }
 
     public int getLevel() {
@@ -156,15 +156,10 @@ public class GameManager implements GameEngine {
     }
 
     public void setCurrentScore(int value) {
-        currentScore = value;
-        System.out.printf("current score should change: %d\n", currentScore);
+        currentScore = value;;
     }
 
     public int getPrevScore() {
         return prevScore;
-    }
-
-    public void setPrevScore(int value) {
-        prevScore = value;
     }
 }
