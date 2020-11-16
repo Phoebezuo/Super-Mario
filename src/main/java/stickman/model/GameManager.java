@@ -112,12 +112,12 @@ public class GameManager implements GameEngine {
     public void save() {
         LevelManager copiedLevel = ((LevelManager) level).deepCopy();
         originator.setState(copiedLevel, currentScore, prevScore);
-        careTaker.add(originator.createMemento());
+        careTaker.setState(originator.createMemento());
     }
 
     @Override
     public void load() {
-        originator.setMomento(careTaker.get());
+        originator.setMomento(careTaker.getState());
         this.level = originator.getState();
         this.currentScore = originator.getCurrentScore();
         this.prevScore = originator.getPrevScore();

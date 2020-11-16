@@ -9,28 +9,23 @@ import java.util.List;
 public class Caretaker {
 
     /**
-     * List of all the saved memento object
+     * Saved memento object
      */
-    private List<Memento> mementoList = new ArrayList<>();
+    private Memento memento;
 
     /**
-     * Add more state into Caretaker object
+     * Set state into Caretaker object
      * @param state all the information of current state, stored in Memento
      */
-    public void add(Memento state) {
-        mementoList.add(state);
+    public void setState(Memento state) {
+        this.memento = state;
     }
 
     /**
-     * Retrieve the last state from Caretaker object
+     * Retrieve the last saved state from Caretaker object
      * @return all the information of last state, stored in Memento
      */
-    public Memento get() {
-        if (mementoList.size() == 0) {
-            return null;
-        }
-        Memento last = mementoList.get(mementoList.size() - 1);
-        mementoList.remove(mementoList.size() - 1);
-        return last;
+    public Memento getState() {
+        return memento;
     }
 }
