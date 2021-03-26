@@ -1,4 +1,4 @@
-# StickMan
+# Super Mario
 
 An application model for a video game **Super Mario**, which consists of a character on the screen, can move left, right, has the ability to jump and shoot after eating mushrooms. The character will interact with the world, have a floor to stand on, obstacles to interact with (bounce, hit, etc.) and maintain a score.
 
